@@ -1,4 +1,4 @@
-from .alphabet import ALPHABET
+from cipher.caesar import ALPHABET
 
 class CaesarCipher:
     def __init__(self):
@@ -13,7 +13,7 @@ class CaesarCipher:
             output_index = (letter_index + key) % alphabet_len
             output_letter = self.alphabet[output_index]
             encrypted_text.append(output_letter)
-        return ''.join(encrypted_text)
+        return "".join(encrypted_text)
 
     def decrypt_text(self, text: str, key: int) -> str:
         alphabet_len = len(self.alphabet)
@@ -24,5 +24,4 @@ class CaesarCipher:
             output_index = (letter_index - key) % alphabet_len
             output_letter = self.alphabet[output_index]
             decrypted_text.append(output_letter)
-        return ''.join(decrypted_text)
-
+        return "".join(decrypted_text)
