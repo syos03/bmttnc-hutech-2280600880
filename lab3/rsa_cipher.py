@@ -15,12 +15,10 @@ class MyApp(QMainWindow):
         self.ui.btn_verify.clicked.connect(self.call_api_verify)
 
     def call_api_gen_keys(self):
-        url = "http://127.0.0.1:5000/api/rsa/generate_keys"
         try:
             response = requests.get(url)
             if response.status_code == 200:
                 data = response.json()
-                msg = QMessageBox()
                 msg.setIcon(QMessageBox.Information)
                 msg.setText(data["message"])
                 msg.exec_()
@@ -40,16 +38,8 @@ class MyApp(QMainWindow):
             if response.status_code == 200:
                 data = response.json()
                 self.ui.txt_cipher_text.setText(data["encrypted_message"])
-                
-                msg = QMessageBox()
-                msg.setIcon(QMessageBox.Information)
-                msg.setText("Encrypted Successfully")
-                msg.exec_()
-            else:
-                print("Error while calling API")
         except requests.exceptions.RequestException as e:
             print("Error: %s" % e.message)
-
     def call_api_decrypt(self):
         url = "http://127.0.0.1:5000/api/rsa/decrypt"
         payload = {
@@ -86,11 +76,8 @@ class MyApp(QMainWindow):
                 msg.setIcon(QMessageBox.Information)
                 msg.setText("Signed Successfully")
                 msg.exec_()
-            else:
-                print("Error while calling API")
         except requests.exceptions.RequestException as e:
             print("Error: %s" % e.message)
-
     def call_api_verify(self):
         url = "http://127.0.0.1:5000/api/rsa/verify"
         payload = {
@@ -101,9 +88,8 @@ class MyApp(QMainWindow):
             response = requests.post(url, json=payload)
             if response.status_code == 200:
                 data = response.json()
-                msg = QMessageBox()
-                msg.setIcon(QMessageBox.Information)
-                if data["is_verified"]:
+                    msg = QMessageBox()
+                    msg.setIcon(QMessageBox.Information)
                     msg.setText("Verified Successfully")
                 else:
                     msg.setText("Verified Fail")
